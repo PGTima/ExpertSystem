@@ -1,0 +1,35 @@
+body {
+    background: url(image.jpg);
+}
+
+h1 {
+    text-align: -webkit-center;
+}
+
+#quest {
+    text-align: -webkit-center;
+}
+
+#yes {
+    margin-left: 530px;
+}
+
+#no {
+    margin-left: 10px;
+}
+
+#answer {
+    text-align: -webkit-center;
+}
+
+#result {
+    margin-top: -50px;
+    margin-left: 470px;
+}
+
+.checkbox {
+    vertical-align: top;
+    margin: cev;
+    width: 17px;
+    height: 17px;
+}
