@@ -297,34 +297,34 @@ function result() {
     }
 
     /*  //Цикл по всем правилам
-                            for (let i = 0; i < json.rules.length; i++) {
-                                let len = json.rules[i].facts_id.length;
-                                let y = 0;
-                                //цикл по фактам в рабочей памяти
-                                for (let k = 0; k < work_mem.length; k++) {
-                                    //если факт из рабочей памяти есть в массиве фактов правила
-                                    if (json.rules[i].facts_id.includes(work_mem[k])) {
-                                        y++;
-                                        //если кол-во фактов в раб памяти == длине массива фактов правила i-того
-                                        //и в массиве фактов раб.памяти нет следующего факта
-                                        //то добавляем в массив раб памяти еще один факт
-                                        if (y == len && work_mem.includes(json.rules[i].add_fact) == false) {
-                                            work_mem.push(json.rules[i].add_fact);
+                                    for (let i = 0; i < json.rules.length; i++) {
+                                        let len = json.rules[i].facts_id.length;
+                                        let y = 0;
+                                        //цикл по фактам в рабочей памяти
+                                        for (let k = 0; k < work_mem.length; k++) {
+                                            //если факт из рабочей памяти есть в массиве фактов правила
+                                            if (json.rules[i].facts_id.includes(work_mem[k])) {
+                                                y++;
+                                                //если кол-во фактов в раб памяти == длине массива фактов правила i-того
+                                                //и в массиве фактов раб.памяти нет следующего факта
+                                                //то добавляем в массив раб памяти еще один факт
+                                                if (y == len && work_mem.includes(json.rules[i].add_fact) == false) {
+                                                    work_mem.push(json.rules[i].add_fact);
+                                                }
+                                            } else {
+                                                break;
+                                            }
                                         }
-                                    } else {
-                                        break;
-                                    }
-                                }
-                            }*/
+                                    }*/
     //Вывод
-    if (work_mem.includes(14) && work_mem.includes(15)) {
-        alert(json.rules[9].message);
+    if (work_mem.includes(14) || work_mem.includes(15)) {
+        alert(json.rules[8].message);
         location.reload(true); //обновляем после вывода результата
     } else if (
         (work_mem.includes(16) && work_mem.includes(14)) ||
         (work_mem.includes(17) && work_mem.includes(18))
     ) {
-        alert(json.rules[10].message);
+        alert(json.rules[9].message);
         location.reload(true);
     }
 }
