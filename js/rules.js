@@ -113,6 +113,7 @@ let json = {
             flag: true,
             add_fact: 12,
             facts_id: [1, 2],
+            message: null,
             prioritet: 0
         },
         {
@@ -121,6 +122,7 @@ let json = {
             flag: true,
             add_fact: 12,
             facts_id: [1, 3],
+            message: null,
             prioritet: 0
         },
         {
@@ -129,6 +131,7 @@ let json = {
             flag: true,
             add_fact: 14,
             facts_id: [4, 12],
+            message: null,
             prioritet: 0
         },
         {
@@ -137,6 +140,7 @@ let json = {
             flag: true,
             add_fact: 15,
             facts_id: [6, 12],
+            message: null,
             prioritet: 0
         },
         {
@@ -144,6 +148,7 @@ let json = {
             id: 5,
             flag: false,
             facts_id: [5, 7],
+            message: null,
             prioritet: 0
         },
         {
@@ -152,6 +157,7 @@ let json = {
             flag: true,
             add_fact: 16,
             facts_id: [8, 13],
+            message: null,
             prioritet: 0
         },
         {
@@ -159,6 +165,7 @@ let json = {
             flag: true,
             add_fact: 17,
             facts_id: [9],
+            message: null,
             prioritet: 0
         },
         {
@@ -167,6 +174,7 @@ let json = {
             flag: true,
             add_fact: 18,
             facts_id: [10, 11],
+            message: null,
             prioritet: 0
         },
         {
@@ -200,6 +208,7 @@ function change_yes() {
 $(document).ready(function() {
     let html = "<p>Начало!!!</p>";
     pQuestion.innerHTML = html;
+    state = 1;
 });
 
 function change_no() {
@@ -214,117 +223,74 @@ function change_no() {
 /**
  * Функция для обработки состояния
  */
-function result() {
-    let check1 = document.getElementById("yes");
-    let check2 = document.getElementById("no");
-    //выбрали ответ
-    if (check1.checked == true) {
-        for (let i = 0; i < factsJson.facts.length; i++) {
-            // выводим вопрос, которого нет в раб памяти и не стоит запр. флаг
-            if (!work_mem.includes(factsJson.facts[i].id) &&
-                factsJson.facts[i].flag == true
-            ) {
-                pQuestion.innerHTML = factsJson.facts[i].name;
-                work_mem.push(factsJson.facts[i].id);
-                //при добавлении правила делаем цикл по всем правилам
-                if (
-                    work_mem.includes(1) &&
-                    work_mem.includes(2) &&
-                    !work_mem.includes(12)
-                ) {
-                    work_mem.push(factsJson.facts[11].id);
-                } else if (
-                    work_mem.includes(1) &&
-                    work_mem.includes(3) &&
-                    !work_mem.includes(12)
-                ) {
-                    work_mem.push(factsJson.facts[11].id);
-                } else if (
-                    work_mem.includes(4) &&
-                    work_mem.includes(12) &&
-                    !work_mem.includes(14)
-                ) {
-                    work_mem.push(factsJson.facts[13].id);
-                } else if (
-                    work_mem.includes(6) &&
-                    work_mem.includes(12) &&
-                    !work_mem.includes(15)
-                ) {
-                    work_mem.push(factsJson.facts[14].id);
-                } else if (
-                    work_mem.includes(4) &&
-                    work_mem.includes(12) &&
-                    !work_mem.includes(14)
-                ) {
-                    work_mem.push(factsJson.facts[13].id);
-                } else if (
-                    (work_mem.includes(5) || work_mem.includes(7)) &&
-                    !work_mem.includes(13)
-                ) {
-                    work_mem.push(factsJson.facts[12].id);
-                } else if (
-                    work_mem.includes(8) &&
-                    work_mem.includes(13) &&
-                    !work_mem.includes(16)
-                ) {
-                    work_mem.push(factsJson.facts[15].id);
-                } else if (work_mem.includes(9) && !work_mem.includes(17)) {
-                    work_mem.push(factsJson.facts[16].id);
-                } else if (
-                    work_mem.includes(10) &&
-                    work_mem.includes(11) &&
-                    !work_mem.includes(18)
-                ) {
-                    work_mem.push(factsJson.facts[17].id);
-                }
-                break;
-            }
-        }
-    } else if (check1.checked == false && work_mem.length == 0) {
-        location.reload(true);
-    } else if (check1.checked == false) {
-        for (let i = 0; i < factsJson.facts.length; i++) {
-            // выводим вопрос, которого нет в раб памяти и не стоит запр. флаг
-            if (!work_mem.includes(factsJson.facts[i].id) &&
-                factsJson.facts[i].flag == true &&
-                !no_include.includes(factsJson.facts[i].id)
-            ) {
-                pQuestion.innerHTML = factsJson.facts[i].name;
-                no_include.push(factsJson.facts[i].id);
-                break;
-            }
-        }
-    }
+function nextQuestion(id) {
+    pQuestion.innerHTML = factsJson.facts[id].name;
+}
 
-    /*  //Цикл по всем правилам
-                                    for (let i = 0; i < json.rules.length; i++) {
-                                        let len = json.rules[i].facts_id.length;
-                                        let y = 0;
-                                        //цикл по фактам в рабочей памяти
-                                        for (let k = 0; k < work_mem.length; k++) {
-                                            //если факт из рабочей памяти есть в массиве фактов правила
-                                            if (json.rules[i].facts_id.includes(work_mem[k])) {
-                                                y++;
-                                                //если кол-во фактов в раб памяти == длине массива фактов правила i-того
-                                                //и в массиве фактов раб.памяти нет следующего факта
-                                                //то добавляем в массив раб памяти еще один факт
-                                                if (y == len && work_mem.includes(json.rules[i].add_fact) == false) {
-                                                    work_mem.push(json.rules[i].add_fact);
-                                                }
-                                            } else {
-                                                break;
-                                            }
-                                        }
-                                    }*/
-    //Вывод
-    if (work_mem.includes(14) || work_mem.includes(15)) {
-        alert(json.rules[8].message);
-        location.reload(true); //обновляем после вывода результата
-    } else if (
-        (work_mem.includes(16) && work_mem.includes(14)) ||
-        (work_mem.includes(17) && work_mem.includes(18))
-    ) {
-        alert(json.rules[9].message);
-        location.reload(true);
+function result() {
+    if (state != 1) {
+        let check1 = document.getElementById("yes");
+        let check2 = document.getElementById("no");
+        //выбран ответ
+        if (check1.checked == true) {
+            for (let i = 0; i < factsJson.facts.length; i++) {
+                if (!work_mem.includes(factsJson.facts[i].id) &&
+                    factsJson.facts[i].flag == true &&
+                    !no_include.includes(factsJson.facts[i].id)
+                ) {
+                    //добавим правило
+                    work_mem.push(factsJson.facts[i].id);
+                    //выведем след вопрос
+                    nextQuestion(i + 1);
+                    count = i + 1;
+                    //цикл по всем правилам
+                    for (let j = 0; j < json.rules.length; j++) {
+                        let y = 0;
+                        let length = json.rules[j].facts_id.length;
+                        //цикл по правилам в раб памяти
+                        for (let l = 0; l < work_mem.length; l++) {
+                            if (
+                                json.rules[j].facts_id.includes(work_mem[l]) &&
+                                !work_mem.includes(json.rules[j].add_fact)
+                            ) {
+                                y++;
+                                if (y == length) {
+                                    work_mem.push(json.rules[j].add_fact);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        } else if (check1.checked == false) {
+            for (let i = 0; i < factsJson.facts.length; i++) {
+                // выводим вопрос, которого нет в раб памяти и не стоит запр. флаг
+                if (!work_mem.includes(factsJson.facts[i].id) &&
+                    factsJson.facts[i].flag == true &&
+                    !no_include.includes(factsJson.facts[i].id)
+                ) {
+                    no_include.push(factsJson.facts[i].id);
+                    nextQuestion(i + 1);
+                    count = i + 1;
+                    break;
+                }
+            }
+        }
+        //Вывод
+        if (work_mem.includes(14) || work_mem.includes(15)) {
+            alert(json.rules[8].message);
+            location.reload(true); //обновляем после вывода результата
+        }
+        if (
+            (work_mem.includes(16) && work_mem.includes(14)) ||
+            (work_mem.includes(17) && work_mem.includes(18))
+        ) {
+            alert(json.rules[9].message);
+            location.reload(true);
+        }
+    } else {
+        nextQuestion(0);
+        state = 2;
     }
 }
