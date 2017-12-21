@@ -256,6 +256,7 @@ function result() {
                                 y++;
                                 if (y == length) {
                                     work_mem.push(json.rules[j].add_fact);
+                                    res(json.rules[j].add_fact);
                                 }
                             }
                         }
@@ -277,20 +278,18 @@ function result() {
                 }
             }
         }
-        //Вывод
-        if (work_mem.includes(14) || work_mem.includes(15)) {
-            alert(json.rules[8].message);
-            location.reload(true); //обновляем после вывода результата
-        }
-        if (
-            (work_mem.includes(16) && work_mem.includes(14)) ||
-            (work_mem.includes(17) && work_mem.includes(18))
-        ) {
-            alert(json.rules[9].message);
-            location.reload(true);
-        }
     } else {
         nextQuestion(0);
         state = 2;
+    }
+}
+//вывод
+function res(id) {
+    for (let j = 0; j < json.rules.length; j++) {
+        if (json.rules[j].facts_id.includes(id) && json.rules[j].message != null) {
+            alert(json.rules[j].message);
+            location.reload(true);
+            break;
+        }
     }
 }
